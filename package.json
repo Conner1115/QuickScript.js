@@ -1,0 +1,12 @@
+{
+  "type": "module",
+  "name": "treasurejs",
+  "version": "0.0.0",
+  "description": "Extension pack for javascript's array, string, number, math, and other algorithms",
+  "main": "core/core.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "LeviathanProgramming, DevLorenzo, EthanKim, 5alidShammout",
+  "license": "ISC"
+}
