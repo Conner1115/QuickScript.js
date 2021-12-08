@@ -1,31 +1,23 @@
-
-String.prototype.splitBy = function(n){
-    var res = [];
-    for(var i = 0; i < this.length; i+=n){
-        var x = "";
-        for(var j = 0; j < n; j++){
-            x+=this[j+i]||"";
-        }
-        res.push(x);
-    }
-    return res;
-}
+String.prototype.splitBy = function (N) {
+  let re = new RegExp(`.{1,${N}}`, "sg");
+  return this.match(re);
+};
 
 String.prototype.cipher = function(rot){
     if(!rot){rot=1;}
-    var alph = "abcdefghijklmnopqrstuvwxyz";
-    var alph2 = alph.toUpperCase();
-    var res = "";
+    let alph = "abcdefghijklmnopqrstuvwxyz";
+    let alph2 = alph.toUpperCase();
+    let res = "";
     this.split('').forEach(x => {
         if(/[a-z]/.test(x)){
         if(alph.indexOf(x) !== -1){
-            var ind = alph.indexOf(x) + rot;
+            let ind = alph.indexOf(x) + rot;
             res+=alph[ind%alph.length];
             
         }
         }else if(/[A-Z]/.test(x)){
         if(alph2.indexOf(x) !== -1){
-            var ind = alph2.indexOf(x) + rot;
+            let ind = alph2.indexOf(x) + rot;
             res+=alph2[ind%alph2.length];
             
         }
@@ -37,7 +29,7 @@ String.prototype.cipher = function(rot){
 }
 
 String.prototype.countOf = function (string) {
-  return this.match(new RegExp(string, "g")).length;
+  return this.match(new RegExp(string, "g"))?.length ?? 0;
 };
 
 String.prototype.toRx = function(flag){
@@ -73,7 +65,7 @@ String.prototype.extract = function(reg,s){
     if(s == undefined){
         s = " ";
     }
-    var res = [];
+    let res = [];
     this.split(s).forEach(x => {
         if(reg.test(x)){
             res.push(x);
@@ -81,3 +73,25 @@ String.prototype.extract = function(reg,s){
     })
     return res;
 }
+
+String.prototype.reduce = function(...args){
+  return this.split("").reduce(...args);
+}
+
+String.prototype.map = function(...args){
+  return this.split("").map(...args).join("");
+}
+
+String.prototype.forEach = function(...args){
+  return this.split("").forEach(...args);
+}
+
+String.prototype.ToCamelCase = function () {
+  let STR = this.toLowerCase()
+    .trim()
+    .replace(/[ -_]/g, " ")
+    .split(" ")
+    .map(word => word.replace(word[0], word[0].toString().toUpperCase()))
+    .join("");
+  return STR.replace(STR[0], STR[0].toLowerCase());
+};

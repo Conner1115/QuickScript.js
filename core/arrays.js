@@ -6,7 +6,7 @@ Array.prototype.locate = function(item){
             return this[i];
         }
         if(val >= this.length){
-            return false;
+            return null;
         }
     }
 }
@@ -22,7 +22,7 @@ Array.prototype.rem = function(item){
 
 Array.prototype.replaceAll = function(input, input2){
     if(typeof input === "string"){
-        for(var i in this){
+        for(let i in this){
             if(this[i] === input){
                 this[i] = input2;
             }
@@ -30,10 +30,9 @@ Array.prototype.replaceAll = function(input, input2){
         return this;
     }
     if(input instanceof RegExp){
-        for(var i in this){
+        for(let i in this){
             if(input.test(this[i])){
                 if(typeof input2 === "function"){
-                    
                         this[i] = input2(this[i]);
                     
                 }else{
@@ -44,7 +43,7 @@ Array.prototype.replaceAll = function(input, input2){
         return this;
     }
     if(typeof input2 === "function"){
-        for(var i in this){
+        for(let i in this){
             this[i] = input2(i);
         }
     }
@@ -54,7 +53,7 @@ Array.prototype.replaceAll = function(input, input2){
 
 Array.prototype.replace = function(input, input2){
     if(typeof input === "string"){
-        for(var i in this){
+        for(let i in this){
             if(this[i] === input){
                 this[i] = input2;
                 break;
@@ -63,7 +62,7 @@ Array.prototype.replace = function(input, input2){
         return this;
     }
     if(input instanceof RegExp){
-        for(var i in this){
+        for(let i in this){
             if(input.test(this[i]) && input.global){
                 if(typeof input2 === "function"){
                     
@@ -90,7 +89,7 @@ Array.prototype.replace = function(input, input2){
     }
 
     if(typeof input2 === "function"){
-        for(var i in this){
+        for(let i in this){
             this[i] = input2(i);
         }
     }
@@ -103,8 +102,8 @@ Array.prototype.random = function(resultsNb) {
 }
 
 Array.prototype.remAll = function(item){
-    var matches = this.filter(x => x === item).length;
-    for(var i = 0; i < matches; i++){
+    let matches = this.filter(x => x === item).length;
+    for(let i = 0; i < matches; i++){
         this.splice(this.indexOf(item), 1);
     }
     return this;
@@ -115,15 +114,15 @@ Array.prototype.sift = function(){
 }
 
 Array.prototype.diff = function(that){
-    var longer = this.length > that.length ? this : that;
-    var shorter = this.length > that.length ? that : this;
-    var res = [];
-    for(var i in longer){
+    let longer = this.length > that.length ? this : that;
+    let shorter = this.length > that.length ? that : this;
+    let res = [];
+    for(let i in longer){
         if(!shorter.includes(longer[i])){
             res.push(longer[i]);
         }
     }
-    for(var i in shorter){
+    for(let i in shorter){
         if(!longer.includes(shorter[i])){
             res.push(shorter[i]);
         }
@@ -132,15 +131,15 @@ Array.prototype.diff = function(that){
 }
 
 Array.prototype.comm = function(that){
-    var longer = this.length > that.length ? this : that;
-    var shorter = this.length > that.length ? that : this;
-    var res = [];
-    for(var i in longer){
+    let longer = this.length > that.length ? this : that;
+    let shorter = this.length > that.length ? that : this;
+    let res = [];
+    for(let i in longer){
         if(shorter.includes(longer[i])){
             res.push(longer[i]);
         }
     }
-    for(var i in shorter){
+    for(let i in shorter){
         if(longer.includes(shorter[i])){
             res.push(shorter[i]);
         }
@@ -148,26 +147,63 @@ Array.prototype.comm = function(that){
     return [...new Set(res.filter(x => typeof x !== "function"))];
 }
 
-Array.prototype.roundAll = function(){
+Array.prototype.roundAll = function() {
   output = []
   let arr = this;
-  
-  for(let i = 0; i < arr.length; i++){
+
+  for (let i = 0; i < arr.length; i++) {
     typeof arr[i] === "number"
-    ? output.push(
-      Math.round(
-        arr[i]
-      )
-    )
-    : output.push(arr[i])
+      ? output.push(
+          Math.round(
+            arr[i]
+          )
+        )
+      : output.push(arr[i])
   }
   return output
 }
 
 Array.prototype.listTypes = function(){
-    var res = [];
+    let res = [];
     this.forEach(x => {
         res.push(typeof x);
     });
     return res;
+};
+Math.randRange = function(m1, m2){
+    if(m1 || m2){
+
+    let min = m1 > m2 ? m2 : m1;
+    let max = m1 > m2 ? m1 : m2;
+    return m2 ? min+(Math.random()*(max-min)) : Math.random() * m1;
+
+    }else{
+        return Math.random()
+    }
+};
+
+Math.dist = function(...args){
+  if(args.length == 0 || args.length % 2){
+    return null;
+  }
+
+  let total = 0;
+  for(let i = 0; i < args.length / 2; i ++){
+    total += (args[i] - args[args.length/2 + i]) ** 2
+  }
+
+  return total ** 0.5;
+};
+
+Math.dot = function(...args){
+  if(args.length == 0 || args.length % 2){
+    return null;
+  }
+
+  let total = 0;
+  for(let i = 0; i < args.length / 2; i ++){
+    total += args[i] * args[args.length/2 + i]
+  }
+
+  return total;
 };
